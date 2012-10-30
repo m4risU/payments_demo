@@ -3,7 +3,7 @@ class Payment < ActiveRecord::Base
 
   validates_presence_of :start_date, :end_date, :amount, :name, :month_day
 
-  has_many :payment_events
+  has_many :payment_events, :dependent => :destroy
   after_save :verify_payment_events
 
   private
