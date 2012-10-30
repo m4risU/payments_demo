@@ -1,0 +1,58 @@
+<% title "Payments" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Month Day</th>
+  </tr>
+  <% for payment in @payments %>
+    <tr>
+      <td><%= link_to payment.name, payment %></td>
+      <td><%= payment.amount %></td>
+      <td><%= payment.start_date %></td>
+      <td><%= payment.end_date %></td>
+      <td><%= payment.month_day %></td>
+      <td><%= link_to "Show", payment %></td>
+      <td><%= link_to "Edit", edit_payment_path(payment) %></td>
+      <td><%= link_to "Destroy", payment, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Payment", new_payment_path %></p>
+
+<hr/>
+
+<h4>Payment summary</h4>
+<p>This month payments summary: <%= @payments_pending %> /<%= @payments_amount %></p>
+
+<h4>Current month payments</h4>
+<ul>
+  <% @current_month_payments.each do |payment_event| %>
+    <li <%= raw "style=\"text-decoration: line-through;\"" if payment_event.paid? %>><%= "#{payment_event.payment.name} #{payment_event.payment_date} #{payment_event.payment.amount}" %>
+      <%= form_for [payment_event.payment, payment_event] do |f| %>
+        <%= f.label :paid %>
+        <%= f.check_box :paid %>
+        <%= f.submit "Save" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<% if @late_payment_events.any? %>
+  <h4>Payments late</h4>
+  <ul>
+    <% @late_payment_events.each do |payment_event| %>
+      <li><%= "#{payment_event.payment.name} #{payment_event.payment_date} #{payment_event.payment.amount}" %>
+        <%= form_for [payment_event.payment, payment_event] do |f| %>
+          <%= f.label :paid %>
+          <%= f.check_box :paid %>
+          <%= f.submit "Save" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

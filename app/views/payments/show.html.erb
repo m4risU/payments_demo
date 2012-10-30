@@ -1,0 +1,41 @@
+<% title "Payment" %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @payment.name %>
+</p>
+<p>
+  <strong>Amount:</strong>
+  <%= @payment.amount %>
+</p>
+<p>
+  <strong>Start Date:</strong>
+  <%= @payment.start_date %>
+</p>
+<p>
+  <strong>End Date:</strong>
+  <%= @payment.end_date %>
+</p>
+<p>
+  <strong>Month Day:</strong>
+  <%= @payment.month_day %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_payment_path(@payment) %> |
+  <%= link_to "Destroy", @payment, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", payments_path %>
+</p>
+
+<h3>Payment events</h3>
+
+<ul>
+  <% @payment.payment_events.sorted.each do |payment_event| %>
+    <li><%= payment_event.payment_date %>
+      <%= form_for [@payment, payment_event] do |f| %>
+        <%= f.check_box :paid %>
+        <%= f.submit "Save" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
