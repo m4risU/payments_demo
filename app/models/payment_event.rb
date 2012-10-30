@@ -6,6 +6,10 @@ class PaymentEvent < ActiveRecord::Base
     where(:paid => [false, nil])
   }
 
+  scope :paid, lambda {
+    where(:paid => true)
+  }
+
   scope :sorted, lambda {
     order("payment_date DESC")
   }

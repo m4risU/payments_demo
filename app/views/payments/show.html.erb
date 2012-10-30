@@ -27,12 +27,19 @@
   <%= link_to "View All", payments_path %>
 </p>
 
-<h3>Payment events</h3>
+<h3>Payment events </h3>
+
+<p>
+  Payments in summary: <%= @payments_summarized %>
+  <br/>
+  Payments paid already: <%= @payments_paid %>
+</p>
 
 <ul>
   <% @payment.payment_events.sorted.each do |payment_event| %>
     <li><%= payment_event.payment_date %>
       <%= form_for [@payment, payment_event] do |f| %>
+        <%= f.label :paid %>
         <%= f.check_box :paid %>
         <%= f.submit "Save" %>
       <% end %>

@@ -5,12 +5,15 @@ class PaymentsController < ApplicationController
     @late_payment_events = PaymentEvent.not_paid.late.sorted
     @current_month_payments = PaymentEvent.current_month.sorted
 
-    @payments_pending = @current_month_payments.not_paid.joins(:payment).sum(:amount)
+    @payments_paid = @current_month_payments.paid.joins(:payment).sum(:amount)
     @payments_amount = @current_month_payments.joins(:payment).sum(:amount)
   end
 
   def show
     @payment = Payment.find(params[:id])
+
+    @payments_summarized = @payment.payment_events.joins(:payment).sum(:amount)
+    @payments_paid = @payment.payment_events.paid.joins(:payment).sum(:amount)
   end
 
   def new
