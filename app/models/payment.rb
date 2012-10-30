@@ -11,7 +11,7 @@ class Payment < ActiveRecord::Base
     payment_events.not_paid.destroy_all
 
     payment_event_months.zip(payment_event_dates).each { |month_array, updated_payment_date|
-      payment_event = PaymentEvent.where(:payment_date => [(Date.new(month_array[0], month_array[1], 1) .. Date.new(month_array[0], month_array[1], -1))]).last
+      payment_event = payment_events.where(:payment_date => [(Date.new(month_array[0], month_array[1], 1) .. Date.new(month_array[0], month_array[1], -1))]).last
       if payment_event
         if !payment_event.paid?
           payment_event.update_attributes({:payment_date => updated_payment_date})
