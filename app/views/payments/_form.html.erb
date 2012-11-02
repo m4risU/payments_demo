@@ -10,15 +10,15 @@
   </p>
   <p>
     <%= f.label :start_date %><br />
-    <%= f.date_select :start_date %>
+    <%= f.date_select :start_date, :discard_day => true %>
   </p>
   <p>
     <%= f.label :end_date %><br />
-    <%= f.date_select :end_date %>
+    <%= f.date_select :end_date, :discard_day => true %>
   </p>
   <p>
-    <%= f.label :month_day %><br />
-    <%= f.number_field :month_day %>
+    <%= f.label "Payment day" %><br />
+    <%= f.number_field :month_day, :min => 1, :max => 31 %>
   </p>
   <p><%= f.submit %></p>
 <% end %>

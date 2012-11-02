@@ -43,7 +43,7 @@
 </ul>
 
 <% if @late_payment_events.any? %>
-  <h4>Payments late</h4>
+  <h4>Payments overdue</h4>
   <ul>
     <% @late_payment_events.each do |payment_event| %>
       <li><%= "#{payment_event.payment.name} #{payment_event.payment_date} #{payment_event.payment.amount}" %>

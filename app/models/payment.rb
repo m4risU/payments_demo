@@ -4,7 +4,9 @@ class Payment < ActiveRecord::Base
   validates_presence_of :start_date, :end_date, :amount, :name, :month_day
 
   has_many :payment_events, :dependent => :destroy
+  before_save :fix_end_date
   after_save :verify_payment_events
+
 
   private
   def verify_payment_events
@@ -51,5 +53,9 @@ class Payment < ActiveRecord::Base
       end
     end
     payment_months
+  end
+
+  def fix_end_date
+    self.end_date = end_date + 1.month - 1.day
   end
 end
